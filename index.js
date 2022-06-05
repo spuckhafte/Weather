@@ -1,13 +1,12 @@
 const API = city => `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=fcc8de7015bbb202209bbf0261babf4c`
 const Capitalize = text => text.charAt(0).toUpperCase() + text.slice(1)
 
-
 const Page = new Spuck({ type: 'main', parent: '#app', class: 'page' }).make()
 
 const CityInput = new Spuck({ type: 'input', parent: '.page', class: 'city-inp' }).render();
 const setCityInp = CityInput.$state('cityInp', 'New York');
 CityInput.prop = { value: '$-cityInp' }
-CityInput.attr = { placeholder: 'city name', autofocus: true, spellcheck: false };
+CityInput.attr = { placeholder: 'city name', autofocus: !isMobile, spellcheck: false };
 CityInput.events = {
     input: event => setCityInp(event.target.value),
     keyup: event => handleCitySubmit(event)
@@ -78,4 +77,15 @@ function dateBuilder(d) {
     let year = d.getFullYear();
 
     return `${day} ${date} ${month} ${year}`;
+}
+
+function isMobile() {
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    if (/android/i.test(userAgent)) {
+        return true;
+    }
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return true;
+    }
+    return false;
 }
