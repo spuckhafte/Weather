@@ -1,6 +1,6 @@
 const API = city => `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&APPID=fcc8de7015bbb202209bbf0261babf4c`
-
 const Capitalize = text => text.charAt(0).toUpperCase() + text.slice(1)
+
 
 const Page = new Spuck({ type: 'main', parent: '#app', class: 'page' }).make()
 
@@ -33,12 +33,10 @@ const setTemp = TempDisplay.$state('temp', '0°C');
 TempDisplay.prop = { text: '$-temp' }
 TempDisplay.make('re');
 
-
 const WeatherDisplay = new Spuck({ type: 'div', parent: '.page', class: 'weather' }).render();
 const setWeather = WeatherDisplay.$state('weather', 'clear sky');
 WeatherDisplay.prop = { text: '<img id="weather" src="https://openweathermap.org/img/wn/01d@2x.png"></img> $-weather' }
 WeatherDisplay.make('re');
-
 
 const HighLow = new Spuck({ type: 'div', parent: '.page', class: 'highlow' }).render();
 const setHigh = HighLow.$state('high', '0°C');
@@ -46,11 +44,14 @@ const setLow = HighLow.$state('low', '0°C');
 HighLow.prop = { text: '<div><b>Min:</b> $-low </div><div><b>Max:</b> $-high </div>' }
 HighLow.make('re');
 
+
 async function handleCitySubmit(e) {
     if (e.keyCode !== 13) return;
     try {
+
         const data = await (await fetch(API(CityInput.getState('cityInp')))).json();
         data.main.temp;
+
         setCity(Capitalize(CityInput.getState('cityInp')))
 
         let now = new Date();
@@ -63,9 +64,8 @@ async function handleCitySubmit(e) {
 
         setHigh(data.main.temp_max + "°C")
         setLow(data.main.temp_min + "°C")
-    } catch (e) {
-        return;
-    }
+
+    } catch (e) { return };
 }
 
 function dateBuilder(d) {
