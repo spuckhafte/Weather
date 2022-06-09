@@ -69,23 +69,17 @@ async function handleCitySubmit(e) {
 
 function dateBuilder(d) {
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     let day = days[d.getDay()];
     let date = d.getDate();
     let month = months[d.getMonth()];
     let year = d.getFullYear();
-
     return `${day} ${date} ${month} ${year}`;
 }
 
 function isMobile() {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    if (/android/i.test(userAgent)) {
-        return true;
-    }
-    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        return true;
-    }
+    if (/android/i.test(userAgent)) return true;
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return true;
     return false;
 }
